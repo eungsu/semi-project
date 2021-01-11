@@ -7,7 +7,7 @@
 <%
 	
 	if (session.getAttribute("LOGINED_USER_NO") == null) {
-		response.sendRedirect("/loginform.jsp?error=deny");
+		response.sendRedirect("/shop-model1/loginform.jsp?error=deny");
 		return;
 	}
 %>

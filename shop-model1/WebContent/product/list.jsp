@@ -76,8 +76,8 @@
 						<div class="col-3 mb-3">
 							<div class="card">
 	 							<div class="card-body" style="height: 475.61px;" >
-		  							<a href="detail.jsp?bookno=<%=book.getNo() %>&pageno=<%=pageNo%>&catno=<%=categoryNo%>">
-		  								<img class="img-thumbnail" src="../resources/images/<%=book.getNo() %>.jpg" alt="Card image">
+		  							<a href="/shop-model1/product/detail.jsp?bookno=<%=book.getNo() %>&pageno=<%=pageNo%>&catno=<%=categoryNo%>">
+		  								<img class="img-thumbnail" src="/shop-model1//resources/images/<%=book.getNo() %>.jpg" alt="Card image">
 		  							</a>
 	   								<strong class="mb-2 book-title"><%=book.getTitle() %></strong>
 	   								<div class="d-flex justify-content-between">
@@ -124,19 +124,19 @@
 						<div class="col-12">
 							<ul class="pagination justify-content-center">
 						  		<li class="page-item <%=pageNo > 1 ? "" : "disabled"%>">
-						  			<a class="page-link" href="list.jsp?pageno=<%=pageNo - 1 %>&catno=<%=categoryNo %>">이전</a>
+						  			<a class="page-link" href="/shop-model1/product/list.jsp?pageno=<%=pageNo - 1 %>&catno=<%=categoryNo %>">이전</a>
 						  		</li>
 						  	<%
 						  		for (int num=1; num<=totalPages; num++) {
 						  	%>
 						  		<li class="page-item <%=num == pageNo ? "active" : "" %>">
-						  			<a class="page-link" href="list.jsp?pageno=<%=num %>&catno=<%=categoryNo %>"><%=num %></a>
+						  			<a class="page-link" href="/shop-model1/product/list.jsp?pageno=<%=num %>&catno=<%=categoryNo %>"><%=num %></a>
 						  		</li>
 						  	<%
 						  		}
 						  	%>
 						  		<li class="page-item <%=pageNo < totalPages ? "" : "disabled" %>">
-						  			<a class="page-link" href="list.jsp?pageno=<%=pageNo + 1 %>&catno=<%=categoryNo %>">다음</a>
+						  			<a class="page-link" href="/shop-model1/product/list.jsp?pageno=<%=pageNo + 1 %>&catno=<%=categoryNo %>">다음</a>
 						  		</li>
 							</ul>
 						</div>

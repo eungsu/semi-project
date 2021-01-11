@@ -72,12 +72,12 @@
 				<div class="card">
 			  		<div class="row no-gutters">
 			    		<div class="col-md-3">
-			      			<img src="/resources/images/<%=book.getNo() %>.jpg" class="card-img" alt="...">
+			      			<img src="/shop-model1/resources/images/<%=book.getNo() %>.jpg" class="card-img" alt="...">
 			    		</div>
 			    		<div class="col-md-9">
 			      			<div class="card-body">
 			        			<h5 class="card-title"><%=book.getTitle() %></h5>
-			        			<form id="book-form" method="get" action="../order/form.jsp">
+			        			<form id="book-form" method="get" action="/shop-model1//order/form.jsp">
 			        				<input type="hidden" name="bookno" value="<%=book.getNo() %>" />
 				        			<table class="table">
 				        				<colgroup>
@@ -130,7 +130,7 @@
 				        						<td colspan="2" class="text-right">
 				        							<button type="button" class="btn btn-primary" onclick="buy()">바로구매</button>
 				        							<button type="button" class="btn btn-info" onclick="addCartItem()">장바구니</button>
-				        							<a href="list.jsp?pageno=1" class="btn btn-outline-primary">쇼핑계속</a>
+				        							<a href="/shop-model1/product/list.jsp?pageno=1" class="btn btn-outline-primary">쇼핑계속</a>
 				        						</td>
 				        					</tr>
 				        				</tbody>
@@ -219,7 +219,7 @@
 	쇼핑계속하기를 눌러서 책 리스트 페이지로 되돌아가기 위해서 카테고리번호, 책리스트 페이지번호가 필요하다.
 	어떤 리뷰에 좋아요를 눌렀는지 알려주기 위해서 리뷰번호가 필요하고, 좋아요를 추가한 다음에 해당 리뷰가 있는 리뷰 리스트로 되돌아오기 위해서 리뷰전용 페이지번호도 필요하다.
  -->
-									<a href="likeReview.jsp?bookno=<%=book.getNo()%>&cartno=<%=book.getCategoryNo()%>&pageno=<%=pageNo %>&reviewno=<%=dto.getNo() %>&reviewpageno=<%=reviewPageNo%>" class="ml-3 btn btn-outline-secondary btn-xs <%="Y".equals(dto.getReviewLiked()) ? "disabled" : ""%>">
+									<a href="/shop-model1/product/likeReview.jsp?bookno=<%=book.getNo()%>&cartno=<%=book.getCategoryNo()%>&pageno=<%=pageNo %>&reviewno=<%=dto.getNo() %>&reviewpageno=<%=reviewPageNo%>" class="ml-3 btn btn-outline-secondary btn-xs <%="Y".equals(dto.getReviewLiked()) ? "disabled" : ""%>">
 									<i class="fa <%="Y".equals(dto.getReviewLiked()) ? "fa-heart text-danger" : "fa-heart-o" %>"></i> <%=dto.getLikeCount() %></a>
 									</small>
 								</div>
@@ -236,17 +236,17 @@
 								<div class="p-3">
 									<ul class="pagination justify-content-center">
 								  		<li class="page-item <%=reviewPageNo == 1 ? "disabled" : ""%>">
-								  			<a class="page-link  " href="detail.jsp?bookno=<%=book.getNo()%>&cartno=<%=book.getCategoryNo()%>&pageno=<%=pageNo %>&reviewpageno=<%=reviewPageNo - 1%>">이전</a>
+								  			<a class="page-link  " href="/shop-model1/product/detail.jsp?bookno=<%=book.getNo()%>&cartno=<%=book.getCategoryNo()%>&pageno=<%=pageNo %>&reviewpageno=<%=reviewPageNo - 1%>">이전</a>
 								  		</li>
 								  	<%
 								  		for (int num=1; num<=totalPages; num++) {
 								  	%>
-								  		<li class="page-item <%=reviewPageNo == num ? "active" : ""%>"><a class="page-link" href="detail.jsp?bookno=<%=book.getNo()%>&cartno=<%=book.getCategoryNo()%>&pageno=<%=pageNo %>&reviewpageno=<%=num%>"><%=num %></a></li>
+								  		<li class="page-item <%=reviewPageNo == num ? "active" : ""%>"><a class="page-link" href="/shop-model1/product/detail.jsp?bookno=<%=book.getNo()%>&cartno=<%=book.getCategoryNo()%>&pageno=<%=pageNo %>&reviewpageno=<%=num%>"><%=num %></a></li>
 								  	<%
 								  		}
 								  	%>	
 								  		<li class="page-item <%=reviewPageNo == totalPages ? "disabled" : ""%>">
-								  			<a class="page-link  " href="detail.jsp?bookno=<%=book.getNo()%>&cartno=<%=book.getCategoryNo()%>&pageno=<%=pageNo %>&reviewpageno=<%=reviewPageNo + 1%>">다음</a>
+								  			<a class="page-link  " href="/shop-model1/product/detail.jsp?bookno=<%=book.getNo()%>&cartno=<%=book.getCategoryNo()%>&pageno=<%=pageNo %>&reviewpageno=<%=reviewPageNo + 1%>">다음</a>
 								  		</li>
 									</ul>
 								</div>
@@ -267,7 +267,7 @@
 		<!-- Modal -->
 		<div class="modal fade" id="modal-review-form" tabindex="-1" aria-hidden="true">
 	  		<div class="modal-dialog">
-	  			<form method="post" action="insertReview.jsp" onsubmit="submitReview(event)">
+	  			<form method="post" action="/shop-model1/product/insertReview.jsp" onsubmit="submitReview(event)">
 	  			<input type="hidden" name="bookno" value="<%=book.getNo() %>" />
 	  			<input type="hidden" name="pageno" value="<%=pageNo %>" />
 	    		<div class="modal-content">
@@ -345,14 +345,14 @@
 	// 바로구매 버튼 클릭시 실행되는 함수다.
 	function buy() {
 		var form = document.getElementById("book-form");
-		form.setAttribute("action", "../order/form.jsp")
+		form.setAttribute("action", "/shop-model1//order/form.jsp")
 		form.submit();
 	}
 	
 	// 장바구니 추가 버튼 클릭시 실행되는 함수다.
 	function addCartItem() {
 		var form = document.getElementById("book-form");
-		form.setAttribute("action", "../cart/insertItem.jsp");
+		form.setAttribute("action", "/shop-model1//cart/insertItem.jsp");
 		form.submit();
 	}
 

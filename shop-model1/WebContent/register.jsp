@@ -12,13 +12,13 @@
 	String email = request.getParameter("email");
 	
 	if (!password.equals(confirmPassword)) {
-		response.sendRedirect("form.jsp?error=pwd");
+		response.sendRedirect("/shop-model1/form.jsp?error=pwd");
 		return;
 	}
 	
 	User savedUser = UserDao.getInstance().getUserById(id);
 	if (savedUser != null) {
-		response.sendRedirect("form.jsp?error=dup");
+		response.sendRedirect("/shop-model1/form.jsp?error=dup");
 		return;
 	}
 	
@@ -33,7 +33,7 @@
 	
 	UserDao.getInstance().insertUser(user);
 	
-	response.sendRedirect("completed.jsp");
+	response.sendRedirect("/shop-model1/completed.jsp");
 	
 	
 %>

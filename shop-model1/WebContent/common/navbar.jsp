@@ -14,13 +14,13 @@
 	List<Category> categories = CategoryDao.getInstance().getAllCategories();
 %>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-3">
-	<a href="/index.jsp" class="navbar-brand">쇼핑몰</a>
+	<a href="/shop-model1/index.jsp" class="navbar-brand">쇼핑몰</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsible-navbar">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="collapsible-navbar">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a href="/index.jsp" class="nav-link">홈</a></li>
+			<li class="nav-item"><a href="/shop-model1/index.jsp" class="nav-link">홈</a></li>
 			<li class="nav-item dropdown">
       			<a class="nav-link dropdown-toggle" href="#" id="navbardrop-1" data-toggle="dropdown">
         			카테고리
@@ -30,7 +30,7 @@
 		      	<%
 		      		for (Category category : categories) { 
 		      	%>
-		        		<a class="dropdown-item" href="/product/list.jsp?catno=<%=category.getNo()%>"><%=category.getName() %></a>
+		        		<a class="dropdown-item" href="/shop-model1/product/list.jsp?catno=<%=category.getNo()%>"><%=category.getName() %></a>
 		        <%
 		      		}
 		        %>
@@ -45,9 +45,9 @@
 		        			마이 메뉴
 				      	</a>
 				      	<div class="dropdown-menu">
-							<a class="dropdown-item"  href="/my/info.jsp" class="nav-link">내정보</a>
-							<a class="dropdown-item"  href="/cart/list.jsp" class="nav-link">장바구니</a>
-							<a class="dropdown-item"  href="/order/list.jsp" class="nav-link">주문내역</a>
+							<a class="dropdown-item"  href="/shop-model1/my/info.jsp" class="nav-link">내정보</a>
+							<a class="dropdown-item"  href="/shop-model1/cart/list.jsp" class="nav-link">장바구니</a>
+							<a class="dropdown-item"  href="/shop-model1/order/list.jsp" class="nav-link">주문내역</a>
 				      	</div>
 				    </li>
 			<%
@@ -68,12 +68,12 @@
 		<%
 			if (loginedUserNo == null) {
 		%>
-				<li class="nav-item"><a href="/loginform.jsp" class="nav-link">로그인</a></li>
-				<li class="nav-item"><a href="/form.jsp" class="nav-link">회원가입</a></li>
+				<li class="nav-item"><a href="/shop-model1/loginform.jsp" class="nav-link">로그인</a></li>
+				<li class="nav-item"><a href="/shop-model1/form.jsp" class="nav-link">회원가입</a></li>
 		<%
 			} else {
 		%>
-				<li class="nav-item"><a href="/logout.jsp" class="nav-link">로그아웃</a></li>
+				<li class="nav-item"><a href="/shop-model1/logout.jsp" class="nav-link">로그아웃</a></li>
 		<%
 			}
 		%>

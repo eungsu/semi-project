@@ -9,23 +9,23 @@
 	String userPassword = request.getParameter("password");
 	
 	if (StringUtils.isEmpty(userId)) {
-		response.sendRedirect("loginform.jsp?error=empty");
+		response.sendRedirect("/shop-model1/loginform.jsp?error=empty");
 		return;
 	}
 	if (StringUtils.isEmpty(userPassword)) {
-		response.sendRedirect("loginform.jsp?error=empty");
+		response.sendRedirect("/shop-model1/loginform.jsp?error=empty");
 		return;
 	}
 	
 	User savedUser = UserDao.getInstance().getUserById(userId);
 	if (savedUser == null) {
-		response.sendRedirect("loginform.jsp?error=invalid");
+		response.sendRedirect("/shop-model1/loginform.jsp?error=invalid");
 		return;
 	}
 	
 	String sha256HexPasssword = DigestUtils.sha256Hex(userPassword);
 	if (!savedUser.getPassword().equals(sha256HexPasssword)) {
-		response.sendRedirect("loginform.jsp?error=invalid");
+		response.sendRedirect("/shop-model1/loginform.jsp?error=invalid");
 		return;
 	}
 	
@@ -33,5 +33,5 @@
 	session.setAttribute("LOGINED_USER_ID", savedUser.getId());
 	session.setAttribute("LOGINED_USER_NAME", savedUser.getName());
 	
-	response.sendRedirect("index.jsp");
+	response.sendRedirect("/shop-model1/index.jsp");
 %>

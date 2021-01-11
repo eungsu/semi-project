@@ -79,9 +79,9 @@
 									<tr>
 										<td><input type="checkbox" name="cartno" value="<%=dto.getItemNo() %>" checked /></td>
 										<td>
-											<img src="/resources/images/<%=dto.getBookNo() %>.jpg" width="60px" height="88px" />
+											<img src="/shop-model1/resources/images/<%=dto.getBookNo() %>.jpg" width="60px" height="88px" />
 											<span class="align-top">
-												<a href="detail.jsp?bookno=<%=dto.getBookNo() %>&catno=<%=dto.getCategoryNo() %>" class="text-body"><%=dto.getBookTitle() %></a>
+												<a href="/shop-model1/product/detail.jsp?bookno=<%=dto.getBookNo() %>&catno=<%=dto.getCategoryNo() %>" class="text-body"><%=dto.getBookTitle() %></a>
 											</span>
 										</td>
 										<td><%=NumberUtils.numberToCurrency(dto.getBookPrice()) %>원</td>
@@ -96,7 +96,7 @@
 										<td><strong><%=NumberUtils.numberToCurrency(dto.getBookSalePrice()*dto.getItemAmount()) %>원</strong></td>
 										<td>
 											<button class="btn btn-primary btn-xs">주문하기</button><br />
-											<a href="deleteItem.jsp?cartno=<%=dto.getItemNo() %>" class="btn btn-secondary btn-xs">삭제하기</a>
+											<a href="/shop-model1/cart/deleteItem.jsp?cartno=<%=dto.getItemNo() %>" class="btn btn-secondary btn-xs">삭제하기</a>
 										</td>
 									</tr>
 						<%

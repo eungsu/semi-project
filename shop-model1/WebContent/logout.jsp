@@ -3,5 +3,5 @@
 <%
 	session.invalidate();
 
-	response.sendRedirect("index.jsp");
+	response.sendRedirect("/shop-model1/index.jsp");
 %>
