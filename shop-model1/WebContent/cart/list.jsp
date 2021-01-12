@@ -42,6 +42,7 @@
 			<div class="card">
 				<div class="card-header font-weight-bold">장바구니</div>
 				<div class="card-body">
+				<form id="cart-form" method="post" action="/shop-model1/order/form.jsp">
 					<table class="table">
 						<colgroup>
 							<col width="2%">
@@ -77,7 +78,7 @@
 									totalSavePoint += dto.getBookSavePoint()*dto.getItemAmount();
 						%>
 									<tr>
-										<td><input type="checkbox" name="cartno" value="<%=dto.getItemNo() %>" checked /></td>
+										<td><input type="checkbox" name="cartno" value="<%=dto.getItemNo() %>" checked onchange="updateTotal()"/></td>
 										<td>
 											<img src="/shop-model1/resources/images/<%=dto.getBookNo() %>.jpg" width="60px" height="88px" />
 											<span class="align-top">
@@ -90,12 +91,12 @@
 											<small>(<%=NumberUtils.numberToCurrency(dto.getBookSavePoint()) %>원 적립)</small>
 										</td>
 										<td>
-											<input type="number" name="amount" value="<%=dto.getItemAmount() %>" style="width: 43px; height: 20px;"/><br/>
-											<button class="btn btn-outline-secondary btn-xs">변경</button>
+											<input type="number" name="amount" id="amount-<%=dto.getItemNo() %>" value="<%=dto.getItemAmount() %>" style="width: 43px; height: 20px;"/><br/>
+											<button type="button" class="btn btn-outline-secondary btn-xs" onclick="changeAmount()" >변경</button>
 										</td>
 										<td><strong><%=NumberUtils.numberToCurrency(dto.getBookSalePrice()*dto.getItemAmount()) %>원</strong></td>
 										<td>
-											<button class="btn btn-primary btn-xs">주문하기</button><br />
+											<button type="button" class="btn btn-primary btn-xs" onclick="buy(<%=dto.getItemNo()%>)">주문하기</button><br />
 											<a href="/shop-model1/cart/deleteItem.jsp?cartno=<%=dto.getItemNo() %>" class="btn btn-secondary btn-xs">삭제하기</a>
 										</td>
 									</tr>
@@ -105,6 +106,7 @@
 						%>
 						</tbody>
 					</table>
+				</form>
 				</div>
 				<div class="card-footer d-flex justify-content-between">
 					<span>선택한 상품 <button class="btn btn-primary btn-xs">주문하기</button> <button class="btn btn-secondary btn-xs">삭제하기</button></span>
@@ -120,5 +122,10 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	function buy(cartItemNo) {
+		location.href = "/shop-model1/order/form.jsp?cartno=" + cartItemNo;
+	}
+</script>
 </body>
 </html>

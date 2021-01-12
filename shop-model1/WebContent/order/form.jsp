@@ -1,5 +1,17 @@
+<%@page import="kr.co.hta.shop.dao.CartItemDao"%>
+<%@page import="kr.co.hta.shop.vo.CartItem"%>
+<%@page import="kr.co.hta.shop.dao.UserDao"%>
+<%@page import="kr.co.hta.shop.vo.User"%>
+<%@page import="kr.co.hta.shop.util.NumberUtils"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="kr.co.hta.shop.dao.BookDao"%>
+<%@page import="kr.co.hta.shop.vo.Book"%>
+<%@page import="kr.co.hta.shop.util.StringUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/loginCheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,8 +38,53 @@
 			<%@ include file="../common/navbar.jsp" %>
 		</div>
 	</div>
+<%
+	List<Map<String, Object>> orderItemList = new ArrayList<>();
+	User user = UserDao.getInstance().getUserByNo(loginedUserNo);
+
+	int bookNo = StringUtils.stringToInt(request.getParameter("bookno"));
+	int amount = StringUtils.stringToInt(request.getParameter("amount"));
 	
-	<form method="post" action="insert.jsp">
+	String[] cartItemNoArr = request.getParameterValues("cartno");
+	
+	if (bookNo != 0) {
+		Book book = BookDao.getInstance().getBookByNo(bookNo);
+		
+		Map<String, Object> item = new HashMap<>();
+		item.put("bookNo", bookNo);
+		item.put("bookCategoryNo", book.getCategoryNo());
+		item.put("bookTitle", book.getTitle());
+		item.put("bookPrice", book.getPrice());
+		item.put("bookSalePrice", book.getSalePrice());
+		item.put("bookSavePoint", book.getSavePoint());
+		item.put("amount", amount);
+		item.put("orderPrice", book.getSalePrice()*amount);
+		
+		orderItemList.add(item);
+	}
+	
+	if (cartItemNoArr != null) {
+		for (String cartItemNoStr : cartItemNoArr) {
+			int cartItemNo = StringUtils.stringToInt(cartItemNoStr);
+			CartItem cartItem = CartItemDao.getInstance().getCartItemByNo(cartItemNo);
+			Book book = BookDao.getInstance().getBookByNo(cartItem.getBookNo());
+			
+			Map<String, Object> item = new HashMap<>();
+			item.put("bookNo", cartItem.getBookNo());
+			item.put("bookCategoryNo", book.getCategoryNo());
+			item.put("bookTitle", book.getTitle());
+			item.put("bookPrice", book.getPrice());
+			item.put("bookSalePrice", book.getSalePrice());
+			item.put("bookSavePoint", book.getSavePoint());
+			item.put("amount", cartItem.getItemAmount());
+			item.put("orderPrice", book.getSalePrice()*cartItem.getItemAmount());
+			
+			orderItemList.add(item);
+		}
+	}
+	
+%>
+	<form method="post" action="/shop-model1/order/insert.jsp">
 		<!-- 주문 상품 정보 시작 -->
 		<div class="row mb-3">
 			<div class="col-12">
@@ -52,43 +109,46 @@
 								</tr>
 							</thead>
 							<tbody>
+							<%
+								int totalOrderPrice = 0;
+								int totalSavePoint = 0;
+							
+								for (Map<String, Object> item : orderItemList) {
+									int itemBookNo = (Integer) item.get("bookNo");
+									int itemCategoryNo = (Integer) item.get("bookCategoryNo");
+									String itemBookTitle = (String) item.get("bookTitle");
+									int itemBookPrice = (Integer) item.get("bookPrice");
+									int itemBookSalePrice = (Integer) item.get("bookSalePrice");
+									int itemBookSavePoint = (Integer) item.get("bookSavePoint");
+									int itemAmount = (Integer) item.get("amount");
+									int orderPrice = (Integer) item.get("orderPrice");
+									
+									totalOrderPrice += orderPrice;
+									totalSavePoint += itemBookSavePoint*itemAmount;
+							%>
 								<tr>
 									<td>
-										<img src="../resources/images/book.jpg" width="60px" height="88px" />
-										<span class="align-top"><a href="detail.jsp" class="text-body">불안한 마음을 잠재우는 방법</a></span>
-										<input type="hidden" name="price" value="<%=23000 %>" />
-										<input type="hidden" name="amount" value="<%=1 %>" />
-										<input type="hidden" name="bookno" value="<%=100 %>" />
+										<img src="/shop-model1/resources/images/<%=itemBookNo %>.jpg" width="60px" height="88px" />
+										<span class="align-top"><a href="detail.jsp?bookno=<%=itemBookNo %>&catno=<%=itemCategoryNo %>" class="text-body"><%=itemBookTitle %></a></span>
+										<input type="hidden" name="bookno" value="<%=itemBookNo %>" />
+										<input type="hidden" name="amount" value="<%=itemAmount %>" />
 									</td>
-									<td>10,000원</td>
+									<td><%=NumberUtils.numberToCurrency(itemBookPrice) %>원</td>
 									<td>
-										9,000원<br/>
-										<small>(500원 적립)</small>
+										<%=NumberUtils.numberToCurrency(itemBookSalePrice) %>원<br/>
+										<small>(<%=NumberUtils.numberToCurrency(itemBookSavePoint) %>원 적립)</small>
 									</td>
-									<td>1</td>
-									<td><strong>9,000원</strong></td>
+									<td><%=itemAmount %></td>
+									<td><strong><%=NumberUtils.numberToCurrency(orderPrice) %>원</strong></td>
 								</tr>
-								<tr>
-									<td>
-										<img src="../resources/images/book.jpg" width="60px" height="88px" />
-										<span class="align-top"><a href="detail.jsp" class="text-body">불안한 마음을 잠재우는 방법</a></span>
-										<input type="hidden" name="wineno" value="<%=179 %>" />
-										<input type="hidden" name="price" value="<%=45000 %>" />
-										<input type="hidden" name="amount" value="<%=3 %>" />
-									</td>
-									<td>10,000원</td>
-									<td>
-										9,000원<br/>
-										<small>(500원 적립)</small>
-									</td>
-									<td>1</td>
-									<td><strong>9,000원</strong></td>
-								</tr>
+							<%
+								}
+							%>
 							</tbody>
 						</table>
 					</div>
 					<div class="card-footer text-right">
-						<span>상품 총 금액 : <strong class="mr-5">18,000원</strong> 포인트 적립액 : <strong>1,000원</strong></span>
+						<span>상품 총 금액 : <strong class="mr-5"><%=NumberUtils.numberToCurrency(totalOrderPrice) %>원</strong> 포인트 적립액 : <strong><%=NumberUtils.numberToCurrency(totalSavePoint) %>원</strong></span>
 					</div>	
 				</div>
 			</div>
@@ -141,46 +201,20 @@
 					<div class="card-body">
 						<div class="form-row">
 							<div class="form-group col-3">
-								<label>사용가능 포인트 <button type="button" class="btn btn-primary btn-xs" id="btn-use-point">사용하기</button></label>
-      							<input type="text" class="form-control" name="usablePoint" value="5800" readonly>
+								<label>사용가능 포인트 <button type="button" class="btn btn-primary btn-xs" id="btn-use-point" onclick="usePoint()">사용하기</button></label>
+      							<input type="text" class="form-control" name="usablePoint" id="usable-point" value="<%=user.getAvailablePoint() %>" readonly>
 							</div>
 							<div class="form-group col-3">
 								<label>총 구매금액</label>
-      							<input type="text" class="form-control" name="totalPrice" value="18000" readonly>
+      							<input type="text" class="form-control" name="totalOrderPrice" id="total-order-price" value="<%=totalOrderPrice %>" readonly>
 							</div>
 							<div class="form-group col-3">
 								<label>포인트 사용액</label>
-      							<input type="text" class="form-control" name="usedPoint" value="0" readonly>
+      							<input type="text" class="form-control" name="usedPoint" id="used-point" value="0" readonly>
 							</div>
 							<div class="form-group col-3">
 								<label>총 결재금액</label>
-      							<input type="text" class="form-control" name="orderPrice" value="18000" readonly>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-6">
-								<label>은행 및 카드사</label>
-      							<select name="bank" class="form-control">
-                                	<option value="" selected disabled>카드사 및 은행 선택</option>
-                                    <option value="카카오뱅크" > 카카오뱅크</option>
-                                    <option value="롯데카드" > 롯데카드</option>
-                                    <option value="신한카드" > 신한카드</option>
-                                    <option value="국민카드" > 국민카드</option>
-                                    <option value="삼성카드" > 삼성카드</option>
-                                    <option value="씨티카드" > 씨티카드</option>
-                                    <option value="BC카드" > BC카드/우리카드</option>
-                                    <option value="국민은행" > 국민은행</option>
-                                    <option value="신한은행" > 신한은행</option>
-                                    <option value="하나은행" > 하나은행</option>
-                                    <option value="기업은행" > 기업은행</option>
-                                    <option value="농협" > 농협</option>
-                                    <option value="수협" > 수협</option>
-                                    <option value="새마을금고" > 새마을금고</option>
-                            	</select>
-							</div>
-							<div class="form-group col-6">
-								<label>카드번호 및 계좌번호</label>
-      							<input type="text" class="form-control" name="account">
+      							<input type="text" class="form-control" name="totalPayPrice" id="total-pay-price" value="<%=totalOrderPrice %>" readonly>
 							</div>
 						</div>
 						<div class="text-right">
@@ -199,5 +233,38 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	function usePoint() {
+		var usablePointField = document.getElementById("usable-point");
+		var totalOrderPriceField = document.getElementById("total-order-price");
+		var usedPointField = document.getElementById("used-point");
+		var totalPayPriceField = document.getElementById("total-pay-price");
+		
+		var usablePoint = parseInt(usablePointField.value);
+		var totalOrderPrice = parseInt(totalOrderPriceField.value);
+		var usedPoint = 0;
+		var totalPayPrice = parseInt(totalPayPriceField.value);
+		
+		if (!usablePoint) {
+			alert("사용가능한 포인트가 없습니다.");
+			return;
+		}
+		if (usablePoint > totalOrderPrice) {
+			usedPoint = usablePoint - totalOrderPrice;
+			totalPayPrice = 0;
+			usablePoint = usedPoint;
+		} else {
+			usedPoint = usablePoint;
+			totalPayPrice = totalOrderPrice - usablePoint;
+			usablePoint = 0;
+		}
+		
+		usablePointField.value = usablePoint;
+		usedPointField.value = usedPoint;
+		totalPayPriceField.value = totalPayPrice;
+		
+		document.getElementById("btn-use-point").disabled = true;
+	}
+</script>
 </body>
 </html>
