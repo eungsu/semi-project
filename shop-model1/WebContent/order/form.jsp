@@ -39,6 +39,8 @@
 		</div>
 	</div>
 <%
+	// 바로구매 혹은 장바구니에서 특정상품 하나 구매 혹은 장바구니에서 선택한 상품 구매를 했을 때
+	// 해당 상품정보,구매수량,구매가격 정보를 포함하는 Map객체를 여러 개 담을 수 있는 List객체 생성하기
 	List<Map<String, Object>> orderItemList = new ArrayList<>();
 	User user = UserDao.getInstance().getUserByNo(loginedUserNo);
 
