@@ -52,7 +52,7 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
-				<form id="user-form" method="post" action="/shop-model1/register.jsp" onsubmit="checkUserForm(event)">
+				<form id="user-form" method="post" action="register.jsp" onsubmit="checkUserForm(event)">
 				<div class="card-header"><h4>회원가입 폼</h4></div>
 				<div class="card-body">
 					<div class="form-group">
@@ -80,7 +80,7 @@
 						<input type="text" class="form-control" name="email" id="user-email" />
 					</div>
 					<div class="text-right">
-						<a href="/shop-model1/index.jsp" class="btn btn-secondary">취소</a>
+						<a href="index.jsp" class="btn btn-secondary">취소</a>
 						<input type="submit" class="btn btn-primary" value="회원가입" />
 					</div>
 				</div>

@@ -67,7 +67,7 @@
 	<div class="row">
 		<div class="col-6 offset-3">
 			<div class="card">
-				<form id="login-form" method="post" action="/shop-model1/login.jsp" onsubmit="checkLoginForm(event)">
+				<form id="login-form" method="post" action="login.jsp" onsubmit="checkLoginForm(event)">
 					<div class="card-header"><h4>로그인 폼</h4></div>
 					<div class="card-body">
 						<div class="form-group">

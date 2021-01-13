@@ -30,5 +30,5 @@
 	}
 
 // 장바구니 리스트를 재요청하는 URL을 응답으로 보낸다.
-	response.sendRedirect("/shop-model1/cart/list.jsp");
+	response.sendRedirect("list.jsp");
 %>

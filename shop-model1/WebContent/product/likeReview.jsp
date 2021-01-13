@@ -26,6 +26,6 @@
 // 책에 대한 리뷰리스트의 특정 페이지로 되돌아가기 위해서 리뷰전용 페이지번호도 조회한다.
  	int reviewPageNo = StringUtils.stringToInt(request.getParameter("reviewpageno")); 	
  	
-	response.sendRedirect("/shop-model1/product/detail.jsp?bookno="+bookNo+"&cartno="+categoryNo+"&pageno="+pageNo+"&reviewno="+reviewNo+"&reviewpageno="+reviewPageNo);
+	response.sendRedirect("detail.jsp?bookno="+bookNo+"&cartno="+categoryNo+"&pageno="+pageNo+"&reviewno="+reviewNo+"&reviewpageno="+reviewPageNo);
 	
 %>

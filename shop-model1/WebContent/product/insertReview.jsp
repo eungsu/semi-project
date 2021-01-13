@@ -41,5 +41,5 @@
 // 책정보를 데이터베이스에 반영한다.
 	BookDao.getInstance().updateBook(book);
 	
-	response.sendRedirect("/shop-model1/product/detail.jsp?bookno=" + book.getNo() + "&catno=" + book.getCategoryNo() + "&pageno=" + pageNo);
+	response.sendRedirect("detail.jsp?bookno=" + book.getNo() + "&catno=" + book.getCategoryNo() + "&pageno=" + pageNo);
 %>

@@ -13,5 +13,5 @@
 		CartItemDao.getInstance().deleteCartItemByNo(cartItemNo, userNo);
 	}
 	
-	response.sendRedirect("/shop-model1/cart/list.jsp");
+	response.sendRedirect("list.jsp");
 %>

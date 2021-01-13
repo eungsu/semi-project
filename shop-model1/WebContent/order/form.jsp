@@ -39,8 +39,6 @@
 		</div>
 	</div>
 <%
-	// 바로구매 혹은 장바구니에서 특정상품 하나 구매 혹은 장바구니에서 선택한 상품 구매를 했을 때
-	// 해당 상품정보,구매수량,구매가격 정보를 포함하는 Map객체를 여러 개 담을 수 있는 List객체 생성하기
 	List<Map<String, Object>> orderItemList = new ArrayList<>();
 	User user = UserDao.getInstance().getUserByNo(loginedUserNo);
 
@@ -133,6 +131,7 @@
 										<img src="/shop-model1/resources/images/<%=itemBookNo %>.jpg" width="60px" height="88px" />
 										<span class="align-top"><a href="detail.jsp?bookno=<%=itemBookNo %>&catno=<%=itemCategoryNo %>" class="text-body"><%=itemBookTitle %></a></span>
 										<input type="hidden" name="bookno" value="<%=itemBookNo %>" />
+										<input type="hidden" name="salePrice" value="<%=itemBookSalePrice %>" />
 										<input type="hidden" name="amount" value="<%=itemAmount %>" />
 									</td>
 									<td><%=NumberUtils.numberToCurrency(itemBookPrice) %>원</td>
@@ -186,7 +185,7 @@
 						<div class="form-row">
 							<div class="form-group col-12">
 								<label>택배사 직원에게 남길 메세지 <small class="text-secondary">(예: 부재시 경비실에 맡겨주세요)</small></label>
-      							<textarea rows="3" class="form-control" name="memo"></textarea>
+      							<textarea rows="3" class="form-control" name="message"></textarea>
 							</div>
 						</div>
 					</div>
@@ -203,7 +202,7 @@
 					<div class="card-body">
 						<div class="form-row">
 							<div class="form-group col-3">
-								<label>사용가능 포인트 <button type="button" class="btn btn-primary btn-xs" id="btn-use-point" onclick="usePoint()">사용하기</button></label>
+								<label>사용가능 포인트 <button type="button" class="btn btn-primary btn-xs" id="btn-use-point" onclick="usePoint()" <%=user.getAvailablePoint() == 0 ? "disabled" : "" %>>사용하기</button></label>
       							<input type="text" class="form-control" name="usablePoint" id="usable-point" value="<%=user.getAvailablePoint() %>" readonly>
 							</div>
 							<div class="form-group col-3">
@@ -217,6 +216,7 @@
 							<div class="form-group col-3">
 								<label>총 결재금액</label>
       							<input type="text" class="form-control" name="totalPayPrice" id="total-pay-price" value="<%=totalOrderPrice %>" readonly>
+      							<input type="hidden" name="totalSavedPoint" value="<%=totalSavePoint %>" />
 							</div>
 						</div>
 						<div class="text-right">

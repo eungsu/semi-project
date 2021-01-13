@@ -51,7 +51,7 @@
 						<div class="col-3">
 							<div class="card ">
 	 							<div class="card-body">
-		  							<a href="/shop-model1/product/detail.jsp?bookno=<%=book.getNo()%>&catno=<%=book.getCategoryNo()%>"><img class="img-thumbnail" src="/shop-model1/resources/images/<%=book.getNo() %>.jpg" alt="Card image"></a>
+		  							<a href="product/detail.jsp?bookno=<%=book.getNo()%>&catno=<%=book.getCategoryNo()%>"><img class="img-thumbnail" src="resources/images/<%=book.getNo() %>.jpg" alt="Card image"></a>
 	   								<strong class="book-title"><%=book.getTitle() %></strong>
 	   								<div class="d-flex justify-content-between">
 	   									<small class="text-secondary"><%=book.getWriter() %></small>
@@ -97,7 +97,7 @@
 						<div class="col-3">
 							<div class="card ">
 	 							<div class="card-body">
-		  							<a href="/shop-model1/product/detail.jsp?bookno=<%=book.getNo()%>&catno=<%=book.getCategoryNo()%>"><img class="img-thumbnail" src="/shop-model1/resources/images/<%=book.getNo() %>.jpg" alt="Card image"></a>
+		  							<a href="product/detail.jsp?bookno=<%=book.getNo()%>&catno=<%=book.getCategoryNo()%>"><img class="img-thumbnail" src="resources/images/<%=book.getNo() %>.jpg" alt="Card image"></a>
 	   								<strong class="book-title"><%=book.getTitle() %></strong>
 	   								<div class="d-flex justify-content-between">
 	   									<small class="text-secondary"><%=book.getWriter() %></small>
