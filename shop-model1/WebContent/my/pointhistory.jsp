@@ -1,5 +1,11 @@
+<%@page import="kr.co.hta.shop.util.NumberUtils"%>
+<%@page import="kr.co.hta.shop.dao.PointHistoryDao"%>
+<%@page import="kr.co.hta.shop.vo.PointHistory"%>
+<%@page import="kr.co.hta.shop.dao.UserDao"%>
+<%@page import="kr.co.hta.shop.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/loginCheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,11 +32,15 @@
 			<%@ include file="../common/navbar.jsp" %>
 		</div>
 	</div>
+<%
+	User user = UserDao.getInstance().getUserByNo(loginedUserNo);
+	List<PointHistory> pointHistories = PointHistoryDao.getInstance().getPointHistoriesByUserNo(loginedUserNo);
+%>
   	<div class="row mb-3">
   		<div class="col-12">
 			<div class="alert alert-info text-center" style="font-size: 27px;">
-				<span><strong>홍길동</strong>님의 포인트 내역입니다..</span><br />
-				<span class="mt-2 small">현재 포인트 적립액 : 53,000원</span>
+				<span><strong><%=user.getName() %></strong>님의 포인트 내역입니다..</span><br />
+				<span class="mt-2 small">현재 포인트 적립액 : <%=NumberUtils.numberToCurrency(user.getAvailablePoint()) %>원</span>
 			</div>
 		</div>
   	</div>
@@ -51,23 +61,31 @@
 							<tr>
 								<th>일자</th>
 								<th>내용</th>
-								<th>주문번호</th>
-								<th>포인트</th>
+								<th class="text-center">주문번호</th>
+								<th class="text-right pr-5">포인트</th>
 							</tr>
 						</thead>
 						<tbody>
+						<%
+							if (pointHistories.isEmpty()) {
+						%>
 							<tr>
-								<td>2020-12-20</td>
-								<td>주문에의한 포인트 적립</td>
-								<td>1000001</td>
-								<td class="text-right pr-5"><strong class="text-warning">300</strong> 원</td>
+								<td class="text-center" colspan="4">포인트 변경이력이 없습니다.</td>
 							</tr>
-							<tr>
-								<td>2020-12-20</td>
-								<td>주문시 포인트 사용</td>
-								<td>1000002</td>
-								<td class="text-right pr-5"><strong class="text-warning">-3000</strong> 원</td>
-							</tr>
+						<%
+							} else {
+								for (PointHistory history : pointHistories) {
+						%>
+									<tr>
+										<td><%=history.getCreatedDate() %></td>
+										<td><%=history.getContent() %></td>
+										<td class="text-center"><a href="detail.jsp?orderno=<%=history.getOrderNo()%>"><%=history.getOrderNo()%></a></td>
+										<td class="text-right pr-5"><strong class="<%=history.getPointAmount() > 0 ? "text-success" : "text-danger"%>"><%=NumberUtils.numberToCurrency(history.getPointAmount()) %></strong> 원</td>
+									</tr>
+						<%
+								}
+							}
+						%>
 						</tbody>
 					</table>
  				</div>

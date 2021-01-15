@@ -21,11 +21,11 @@ public class PointHistoryDao {
 	private static final String INSERT_POINT_HISTORY_QUERY = "insert into shop2_user_point_histories"
 														   + "(history_no, user_no, history_content, order_no, history_point_amount)"
 														   + "values"
-														   + "(shop2_order_item_seq.nextval, ?, ?, ?, ?)";
+														   + "(shop2_history_seq.nextval, ?, ?, ?, ?)";
 	private static final String GET_POINT_HISTROIES_BY_USERNO_QUERY = "select * "
 																	+ "from shop2_user_point_histories "
 																	+ "where user_no = ? "
-																	+ "order by order_item_no desc";
+																	+ "order by history_no desc";
 	
 	/**
 	 * 포인트변경이력정보를 저장한다.

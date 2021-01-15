@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/loginCheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,20 +30,29 @@
 	
 	<!-- 시작 -->
 	<div class="row mb-3">
-		<div class="col-12">
-			<div class="alert alert-error text-center" style="font-size: 27px;">
-				<span><strong>홍길동</strong>님 비밀번호가 일치하지 않습니다.</span><br />
-				<span class="mt-2 small">내 정보 보기화면에서 다시 시도해 주시기 바랍니다.</span>
-			</div>
-		</div>
+<%
+	String error = request.getParameter("error");
+	if (error == null) {
+%>
 		<div class="col-12">
 			<div class="alert alert-success text-center" style="font-size: 27px;">
-				<span><strong>홍길동</strong>님 비밀번호 변경이 완료되었습니다.</span><br />
+				<span><strong><%=loginedUserName %></strong>님 비밀번호 변경이 완료되었습니다.</span><br />
 				<span class="mt-2 small">보안을 위해서 비밀번호는 주기적으로 변경해주시기 바라겠습니다.</span>
 			</div>
 		</div>
+<%
+	} else {
+%>
+		<div class="col-12">
+			<div class="alert alert-error text-center" style="font-size: 27px;">
+				<span><strong><%=loginedUserName %></strong>님 비밀번호가 일치하지 않습니다.</span><br />
+				<span class="mt-2 small">내 정보 보기화면에서 다시 시도해 주시기 바랍니다.</span>
+			</div>
+		</div>
+<%
+	}
+%>	
 	</div>
-		
 	<div class="row">
 		<div class="col-12 mt-3">
 			<%@ include file="../common/footer.jsp" %>

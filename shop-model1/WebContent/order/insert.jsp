@@ -96,7 +96,7 @@
 		pointHistory.setUserNo(userNo);
 		pointHistory.setContent("주문시 포인트 사용");
 		pointHistory.setOrderNo(orderNo);
-		pointHistory.setPointAmount(usedPoint);
+		pointHistory.setPointAmount(-1*usedPoint);
 		
 		PointHistoryDao.getInstance().insertPointHistory(pointHistory);
 	}

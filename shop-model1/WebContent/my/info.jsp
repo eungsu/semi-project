@@ -35,7 +35,7 @@
   	<div class="row mb-3">
   		<div class="col-12">
 			<div class="alert alert-info text-center" style="font-size: 27px;">
-				<span><strong>홍길동</strong>님 즐겁고 행복한 하루 보내세요</span><br />
+				<span><strong><%=loginedUserName %></strong>님 즐겁고 행복한 하루 보내세요</span><br />
 			</div>
 		</div>
   	</div>
@@ -119,7 +119,7 @@
 	<!-- Modal -->
 	<div class="modal fade" id="modal-password-form" tabindex="-1" aria-hidden="true">
   		<div class="modal-dialog">
-  			<form method="post" action="changepassword.jsp">
+  			<form method="post" action="changepassword.jsp" onsubmit="changePassword(event)">
     		<div class="modal-content">
       			<div class="modal-header">
         			<h5 class="modal-title">비밀번호 변경하기</h5>
@@ -132,15 +132,15 @@
       					<div class="card-body">
 		        			<div class="form-group">
 		        				<label class="font-weight-bold">이전 비밀번호</label>
-		        				<input type="password" class="form-control" name="prevPassword" />
+		        				<input type="password" class="form-control" name="prevPassword" id="pre-password"/>
 		        			</div>
 		        			<div class="form-group">
 		        				<label class="font-weight-bold">새 비밀번호</label>
-		        				<input type="password" class="form-control" name="password" />
+		        				<input type="password" class="form-control" name="password"  id="passsword"/>
 		        			</div>
 		        			<div class="form-group">
 		        				<label class="font-weight-bold">새 비밀번호 확인</label>
-		        				<input type="password" class="form-control" name="confirmPassword" />
+		        				<input type="password" class="form-control" name="confirmPassword" id="confirm-password"/>
 		        			</div>
       					</div>
       				</div>
@@ -161,5 +161,29 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	function changePassword(event) {
+		if (!document.getElementById("pre-password").value) {
+			alert("이전 비밀번호를 입력하세요");
+			event.preventDefault();
+			return;
+		}
+		
+		var password = document.getElementById("password").value;
+		var confirmPassword = document.getElementById("confirm-password").value;
+		if (!password || !confirmPassword) {
+			alert("새 비밀번호를 입력하세요");
+			event.preventDefault();
+			return;
+		}
+		
+		if (password != confirmPassword) {
+			alert("비밀번호가 일치하지 않습니다.");
+			event.preventDefault();
+			return;
+		}
+		
+	}
+</script>
 </body>
 </html>

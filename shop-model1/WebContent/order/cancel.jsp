@@ -38,7 +38,7 @@
 	pointHistory.setUserNo(loginedUserNo);
 	pointHistory.setContent("주문취로 인한 포인트 회수");
 	pointHistory.setOrderNo(orderNo);
-	pointHistory.setPointAmount(order.getTotalSavedPoint());
+	pointHistory.setPointAmount(-1*order.getTotalSavedPoint());
 	
 	PointHistoryDao.getInstance().insertPointHistory(pointHistory);
 	
