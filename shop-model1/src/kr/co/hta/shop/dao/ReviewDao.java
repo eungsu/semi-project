@@ -66,7 +66,14 @@ public class ReviewDao {
 			                                                  + "values"
 			                                                  + "(?, ?)";
 	
-	
+	/**
+	 * 지정된 책번호에 해당하는 책에 대한 리뷰 중에서 지정된 범위에 속하는 리뷰목록을 반환한다.
+	 * @param bookNo 책번호
+	 * @param begin 조회시작 행 번호
+	 * @param end 조회종료 행 번호
+	 * @return 리뷰목록
+	 * @throws SQLException
+	 */
 	public List<ReviewDto> getReviewDtosByRange(int bookNo, int begin, int end) throws SQLException {
 		List<ReviewDto> reviewDtoList = new ArrayList<>();
 		Connection con = ConnectionUtil.getConnection();
@@ -95,6 +102,16 @@ public class ReviewDao {
 		return reviewDtoList;
 	}
 	
+	/**
+	 * 지정된 책번호에 해당하는 책에 대한 리뷰 중에서 지정된 범위에 속하는 리뷰목록을 반환한다.<br />
+	 * 지정된 사용자번호에 해당하는 사용자가 좋아요를 클릭한 리뷰에 대해서는 review_liked 값이 "Y"로 반환된다.
+	 * @param bookNo 책번호
+	 * @param userNo 사용자번호
+	 * @param begin 조회시작 행번호
+	 * @param end 조회끝 행번호
+	 * @return 리뷰 목록
+	 * @throws SQLException
+	 */
 	public List<ReviewDto> getReviewDtosByRange(int bookNo, int userNo, int begin, int end) throws SQLException {
 		List<ReviewDto> reviewDtoList = new ArrayList<>();
 		Connection con = ConnectionUtil.getConnection();
@@ -125,6 +142,12 @@ public class ReviewDao {
 		return reviewDtoList;
 	}
 	
+	/**
+	 * 지정된 리뷰번호의 리뷰정보를 반환한다.
+	 * @param reviewNo 리뷰번호
+	 * @return 리뷰정보
+	 * @throws SQLException
+	 */
 	public Review getReviewByNo(int reviewNo) throws SQLException {
 		Review review = null;
 		Connection con = ConnectionUtil.getConnection();
@@ -152,6 +175,12 @@ public class ReviewDao {
 		
 	}
 	
+	/**
+	 * 지정된 책번호에 해당하는 책에 대해 작성된 리뷰갯수를 반환한다.
+	 * @param bookNo 책번호
+	 * @return 리뷰갯수
+	 * @throws SQLException
+	 */
 	public int getReviewsCountByBookNo(int bookNo) throws SQLException {
 		int cnt = 0;
 		Connection con = ConnectionUtil.getConnection();
@@ -167,7 +196,12 @@ public class ReviewDao {
 		
 		return cnt;
 	}
-	
+
+	/**
+	 * 신규 리뷰정보를 저장한다.
+	 * @param review 리뷰정보
+	 * @throws SQLException
+	 */
 	public void insertReview(Review review) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(INSERT_REVIEW_QUERY);
@@ -182,6 +216,11 @@ public class ReviewDao {
 		con.close();
 	}
 	
+	/**
+	 * 리뷰정보를 수정한다.
+	 * @param review 수정사항이 반영된 리뷰정보
+	 * @throws SQLException
+	 */
 	public void updateReview(Review review) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(UPDATE_REVIEW_QUERY);
@@ -196,7 +235,12 @@ public class ReviewDao {
 		con.close();
 	}
 	
-	
+	/**
+	 * 리뷰번호와 사용자번호를 전달받아서 리뷰 좋아요 정보를 저장한다.
+	 * @param reviewNo 리뷰번호
+	 * @param userNo 사용자번호
+	 * @throws SQLException
+	 */
 	public void insertReviewLikeUser(int reviewNo, int userNo) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(INSERT_REVIEW_LIKE_USER_QUERY);

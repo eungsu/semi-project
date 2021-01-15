@@ -1,5 +1,9 @@
+<%@page import="kr.co.hta.shop.util.NumberUtils"%>
+<%@page import="kr.co.hta.shop.dao.OrderDao"%>
+<%@page import="kr.co.hta.shop.vo.Order"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/loginCheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,6 +31,10 @@
 		</div>
 	</div>
 	
+<%
+// 로그인한 사용자의 사용자번호로 주문내역정보를 조회한다.
+	List<Order> orders = OrderDao.getInstance().getOrdersByUserNo(loginedUserNo);		
+%>
 	<!-- 주문 내역 시작 -->
 	<div class="row mb-3">
 		<div class="col-12">
@@ -41,38 +49,32 @@
 								<th>주문내역</th>
 								<th>주문금액/수량</th>
 								<th>주문상태</th>
-								<th>주문자</th>
 								<th>수령자</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><a href="detail.jsp">100000410</a></td>
-								<td>2020-12-20</td>
-								<td><a href="detail.jsp">이것이 자바다 외 2종</a></td>
-								<td>45,000원/3</td>
-								<td><span class="text-success">결재완료</span></td>
-								<td>홍길동</td>
-								<td>홍길동</td>
-							</tr>
-							<tr>
-								<td><a href="detail.jsp">100000410</a></td>
-								<td>2020-12-20</td>
-								<td><a href="detail.jsp">이것이 자바다 외 2종</a></td>
-								<td>45,000원/3</td>
-								<td><span class="text-success">결재완료</span></td>
-								<td>홍길동</td>
-								<td>홍길동</td>
-							</tr>
-							<tr>
-								<td><a href="detail.jsp">100000410</a></td>
-								<td>2020-12-20</td>
-								<td><a href="detail.jsp">이것이 자바다 외 2종</a></td>
-								<td>45,000원/3</td>
-								<td><span class="text-success">결재완료</span></td>
-								<td>홍길동</td>
-								<td>홍길동</td>
-							</tr>
+						<%
+							if (orders.isEmpty()) {
+						%>
+								<tr>
+									<td class="text-center" colspan="6">주문내역이 존재하지 않습니다.</td>
+								</tr>
+						<%
+							} else {
+								for (Order order : orders) {
+						%>
+									<tr>
+										<td><a href="detail.jsp?orderno=<%=order.getNo()%>"><%=order.getNo() %></a></td>
+										<td><%=order.getCreatedDate() %></td>
+										<td><a href="detail.jsp?orderno=<%=order.getNo()%>"><%=order.getDescription() %></a></td>
+										<td><%=NumberUtils.numberToCurrency(order.getTotalOrderPrice()) %>원/<%=order.getAmount() %></td>
+										<td><span class="text-success"><%=order.getStatus() %></span></td>
+										<td><%=order.getRecipientName() %></td>
+									</tr>
+						<%										
+								}
+							}
+						%>
 						</tbody>
 					</table>
 				</div>

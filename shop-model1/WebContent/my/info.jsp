@@ -1,5 +1,11 @@
+<%@page import="kr.co.hta.shop.util.NumberUtils"%>
+<%@page import="kr.co.hta.shop.dao.OrderDao"%>
+<%@page import="kr.co.hta.shop.vo.Order"%>
+<%@page import="kr.co.hta.shop.vo.User"%>
+<%@page import="kr.co.hta.shop.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/loginCheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -33,7 +39,9 @@
 			</div>
 		</div>
   	</div>
- 
+ <%
+ 	User user = UserDao.getInstance().getUserByNo(loginedUserNo);
+ %>
  	<div class="row mb-3">
  		<div class="col-12">
  			<div class="card">
@@ -43,24 +51,28 @@
  						<tbody>
  							<tr>
  								<th>이름</th>
- 								<td>홍길동</td>
+ 								<td><%=user.getName() %></td>
  								<th>적립 포인트</th>
- 								<td><span class="mr-5"><strong class="text-danger">50,000</strong> 원</span> <a href="pointhistory.jsp" class="btn btn-primary btn-xs">상세내용</a></td>
+ 								<td><span class="mr-5"><strong class="text-danger"><%=NumberUtils.numberToCurrency(user.getAvailablePoint()) %></strong> 원</span> <a href="pointhistory.jsp" class="btn btn-primary btn-xs">상세내용</a></td>
  							</tr>
  							<tr>
  								<th>아이디</th>
- 								<td>hong</td>
+ 								<td><%=user.getId() %></td>
  								<th>비밀번호</th>
  								<td><button class="btn btn-outline-primary btn-xs" data-toggle="modal" data-target="#modal-password-form">비밀번호 변경</button></td>
  							</tr>
  							<tr>
  								<th>연락처</th>
- 								<td>010-1111-1111</td>
+ 								<td><%=user.getTel() %></td>
  								<th>이메일</th>
- 								<td>hong@gmail.com</td>
+ 								<td><%=user.getEmail() %></td>
  							</tr>
  						</tbody>
  					</table>
+ 					<%
+ // 로그인한 사용자의 사용자번호로 주문내역정보를 조회한다.
+ 					List<Order> orders = OrderDao.getInstance().getOrdersByUserNo(loginedUserNo);
+ 					%>
  					<h4 class="card-title">최근 주문내역</h4>
  					<table class="table">
 						<thead>
@@ -70,29 +82,32 @@
 								<th>주문내역</th>
 								<th>주문금액/수량</th>
 								<th>주문상태</th>
-								<th>주문자</th>
 								<th>수령자</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><a href="detail.jsp">100000410</a></td>
-								<td>2020-12-20</td>
-								<td><a href="detail.jsp">이것이 자바다 외 2종</a></td>
-								<td>45,000원/3</td>
-								<td><span class="text-success">결재완료</span></td>
-								<td>홍길동</td>
-								<td>홍길동</td>
-							</tr>
-							<tr>
-								<td><a href="detail.jsp">100000410</a></td>
-								<td>2020-12-20</td>
-								<td><a href="detail.jsp">이것이 자바다 외 2종</a></td>
-								<td>45,000원/3</td>
-								<td><span class="text-success">결재완료</span></td>
-								<td>홍길동</td>
-								<td>홍길동</td>
-							</tr>
+						<%
+							if (orders.isEmpty()) {
+						%>
+								<tr>
+									<td class="text-center" colspan="6">주문내역이 존재하지 않습니다.</td>
+								</tr>
+						<%
+							} else {
+								for (Order order : orders) {
+						%>
+									<tr>
+										<td><a href="detail.jsp?orderno=<%=order.getNo()%>"><%=order.getNo() %></a></td>
+										<td><%=order.getCreatedDate() %></td>
+										<td><a href="detail.jsp?orderno=<%=order.getNo()%>"><%=order.getDescription() %></a></td>
+										<td><%=NumberUtils.numberToCurrency(order.getTotalOrderPrice()) %>원/<%=order.getAmount() %></td>
+										<td><span class="text-success"><%=order.getStatus() %></span></td>
+										<td><%=order.getRecipientName() %></td>
+									</tr>
+						<%										
+								}
+							}
+						%>
 						</tbody>
 					</table>
  				</div>
@@ -100,7 +115,7 @@
  		</div>
  	</div>
  	
- 	<!-- 리뷰 쓰기 폼 모달 시작 -->
+ 	<!-- 비밀번호 변경 폼 모달 시작 -->
 	<!-- Modal -->
 	<div class="modal fade" id="modal-password-form" tabindex="-1" aria-hidden="true">
   		<div class="modal-dialog">
@@ -138,7 +153,7 @@
     		</form>
   		</div>
 	</div>
-	<!-- 리뷰 쓰기 폼 모달 끝 -->
+	<!-- 비밀번호 변경 폼 모달 끝 -->
  	
   	<div class="row">
 		<div class="col-12 mt-3">

@@ -27,6 +27,11 @@ public class PointHistoryDao {
 																	+ "where user_no = ? "
 																	+ "order by order_item_no desc";
 	
+	/**
+	 * 포인트변경이력정보를 저장한다.
+	 * @param pointHistory 포인트변경이력 정보
+	 * @throws SQLException
+	 */
 	public void insertPointHistory(PointHistory pointHistory) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(INSERT_POINT_HISTORY_QUERY);
@@ -40,6 +45,12 @@ public class PointHistoryDao {
 		con.close();
 	}
 	
+	/**
+	 * 지정된 사용자번호로 저장된 포인트이력정보 목록을 반환한다.
+	 * @param userNo 사용자 번호
+	 * @return 포인트 이력정보 목록
+	 * @throws SQLException
+	 */
 	public List<PointHistory> getPointHistoriesByUserNo(int userNo) throws SQLException {
 		List<PointHistory> pointHistories = new ArrayList<>();
 		Connection con = ConnectionUtil.getConnection();

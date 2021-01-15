@@ -82,7 +82,7 @@
 										<td>
 											<img src="../resources/images/<%=dto.getBookNo() %>.jpg" width="60px" height="88px" />
 											<span class="align-top">
-												<a href="../product/detail.jsp?bookno=<%=dto.getBookNo() %>&catno=<%=dto.getCategoryNo() %>" class="text-body"><%=dto.getBookTitle() %></a>
+												<a href="../book/detail.jsp?bookno=<%=dto.getBookNo() %>&catno=<%=dto.getCategoryNo() %>" class="text-body"><%=dto.getBookTitle() %></a>
 											</span>
 										</td>
 										<td><%=NumberUtils.numberToCurrency(dto.getBookPrice()) %>원</td>

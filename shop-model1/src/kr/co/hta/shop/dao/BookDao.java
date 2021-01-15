@@ -59,6 +59,11 @@ public class BookDao {
 		return bookDao;
 	}
 	
+	/**
+	 * 3개월 이내에 등록된 새 책중에서 가장 최근 책 4권을 반환한다.
+	 * @return 새 책
+	 * @throws SQLException
+	 */
 	public List<Book> getNewBooks() throws SQLException {
 		List<Book> books = new ArrayList<>();
 		
@@ -95,6 +100,11 @@ public class BookDao {
 		return books;
 	}
 	
+	/**
+	 * 베스트셀러로 지정된 책 중에서 가장 최근에 등록된 책 4권을 반환한다.
+	 * @return 베스트셀러 책
+	 * @throws SQLException
+	 */
 	public List<Book> getBestsellerBooks() throws SQLException {
 		List<Book> books = new ArrayList<>();
 		
@@ -131,6 +141,12 @@ public class BookDao {
 		return books;
 	}
 	
+	/**
+	 * 책번호에 해당하는 책정보를 반환한다.
+	 * @param bookNo 책번호
+	 * @return 책정보
+	 * @throws SQLException
+	 */
 	public Book getBookByNo(int bookNo) throws SQLException {
 		Book book = null;
 		
@@ -167,6 +183,12 @@ public class BookDao {
 		return book;
 	}
 	
+	/**
+	 * 지정된 카테고리번호로 속하는 책의 갯수를 반환한다.
+	 * @param categoryNo
+	 * @return
+	 * @throws SQLException
+	 */
 	public int getBooksCountByCategory(int categoryNo) throws SQLException {
 		int booksCount = 0;
 		
@@ -183,6 +205,14 @@ public class BookDao {
 		return booksCount;
 	}
 	
+	/**
+	 * 지정된 카테고리번호에 해당하는 책 중에서 지정된 범위에 속하는 책들을 반환한다.
+	 * @param categoryNo 카테고리번호
+	 * @param begin 조회시작 행 번호
+	 * @param end 조회끝 행 번호
+	 * @return 책목록
+	 * @throws SQLException
+	 */
 	public List<Book> getBooksByCategory(int categoryNo, int begin, int end) throws SQLException {
 		List<Book> books = new ArrayList<>();
 		
@@ -222,6 +252,11 @@ public class BookDao {
 		return books;
 	}
 	
+	/**
+	 * 책정보를 변경한다.
+	 * @param book 변경할 책 정보
+	 * @throws SQLException
+	 */
 	public void updateBook(Book book) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(UPDATE_BOOK_QUERY);

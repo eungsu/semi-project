@@ -40,8 +40,14 @@ public class CartItemDao {
 													   + "	user_no = ?, "
 													   + "	cart_item_amount = ? "
 													   + "where cart_item_no = ?";
-	private static final String DELETE_CART_ITEM_BY_NO_QUERY = "delete from SHOP2_BOOK_CART_ITEMS where cart_item_no = ? and user_no = ?";
+	private static final String DELETE_CART_ITEM_BY_NO_QUERY = "delete from SHOP2_BOOK_CART_ITEMS where cart_item_no = ?";
+	private static final String DELETE_CART_ITEM_BY_USERNO_BOOKNO_QUERY = "delete from SHOP2_BOOK_CART_ITEMS where user_no = ? and book_no = ?";
 	
+	/**
+	 * 장바구닌 아이템정보를 저장한다.
+	 * @param cartItem
+	 * @throws SQLException
+	 */
 	public void insertCartItem(CartItem cartItem) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(INSERT_CART_ITEM_QUERY);
@@ -53,7 +59,13 @@ public class CartItemDao {
 		pstmt.close();
 		con.close();
 	}
-		
+	
+	/**
+	 * 장바구니 아이템 번호에 해당하는 아이템정보를 반환한다.
+	 * @param cartItemNo 장바구니 아이템번호
+	 * @return 장바구니 아이템
+	 * @throws SQLException
+	 */
 	public CartItem getCartItemByNo(int cartItemNo) throws SQLException {
 		CartItem cartItem = null;
 		Connection con = ConnectionUtil.getConnection();
@@ -75,6 +87,13 @@ public class CartItemDao {
 		return cartItem;
 	}
 
+	/**
+	 * 장바구니에서 지정된 사용자번호와 책번호에 해당하는 장바구니 아이템정보를 조회해서 반환한다.
+	 * @param bookNo 책번호
+	 * @param userNo 사용자 번호
+	 * @return 장바구니 아이템 번호, 조회조건에 만족하는 행이 존재하지 않는 경우 null이 반환됨
+	 * @throws SQLException
+	 */
 	public CartItem getCartItemByBookNoAndUserNo(int bookNo, int userNo) throws SQLException {
 		CartItem cartItem = null;
 		Connection con = ConnectionUtil.getConnection();
@@ -97,6 +116,12 @@ public class CartItemDao {
 		return cartItem;
 	}
 	
+	/**
+	 * 지정된 사용자번호로 등록된 장바구니 아이템 목록을 반환한다.
+	 * @param userNo 사용자번호
+	 * @return 장바구니 아이템 목록
+	 * @throws SQLException
+	 */
 	public List<CartItemDto> getCartItemDtosByUserNo(int userNo) throws SQLException {
 		List<CartItemDto> cartItemDtoList = new ArrayList<>();
 		
@@ -126,6 +151,11 @@ public class CartItemDao {
 		return cartItemDtoList;
 	}
 	
+	/**
+	 * 장바구니 아이템정보를 전달받아서 해당 장바구니 아이템정보를 변경한다.
+	 * @param cartItem 변경사항이 반영된 장바구니 아이템 정보
+	 * @throws SQLException
+	 */
 	public void updateCartItem(CartItem cartItem) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(UPDATE_CART_ITEM_QUERY);
@@ -139,11 +169,34 @@ public class CartItemDao {
 		con.close();
 	}
 	
-	public void deleteCartItemByNo(int cartItemNo, int userNo) throws SQLException {
+	/**
+	 * 장바구니 아이템정보 번호를 전달받아서 해당 장바구니 아이템정보를 삭제한다
+	 * @param cartItemNo 장바구니 아이템 번호
+	 * @param userNo 사용자번호
+	 * @throws SQLException
+	 */
+	public void deleteCartItemByNo(int cartItemNo) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(DELETE_CART_ITEM_BY_NO_QUERY);
 		pstmt.setInt(1, cartItemNo);
-		pstmt.setInt(2, userNo);
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		con.close();
+		
+	}
+	
+	/**
+	 * 사용자번호와 책번호를 전달받아서 해당 장바구니 아이템정보를 삭제한다
+	 * @param userNo 사용자번호
+	 * @param bookNo 책번호
+	 * @throws SQLException
+	 */
+	public void deleteCartItemByUserNoAndBookNo(int userNo, int bookNo) throws SQLException {
+		Connection con = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = con.prepareStatement(DELETE_CART_ITEM_BY_USERNO_BOOKNO_QUERY);
+		pstmt.setInt(1, userNo);
+		pstmt.setInt(2, bookNo);
 		pstmt.executeUpdate();
 		
 		pstmt.close();

@@ -21,6 +21,12 @@ public class UserDao {
 		return userDao;
 	}
 	
+	/**
+	 * 지정된 사용자아이디로 사용자정보를 조회해서 반환한다.
+	 * @param userId 사용자 아이디
+	 * @return 사용자정보, 사용자아이디가 올바르지 않는 경우 null이 반환된다.
+	 * @throws SQLException
+	 */
 	public User getUserById(String userId) throws SQLException {
 		User user = null;
 		Connection con = ConnectionUtil.getConnection();
@@ -46,6 +52,12 @@ public class UserDao {
 		return user;
 	}
 	
+	/**
+	 * 지정된 사용자번호로 사용자정보를 조회해서 반환한다.
+	 * @param userNo 사용자번호
+	 * @return 사용자 정보
+	 * @throws SQLException
+	 */
 	public User getUserByNo(int userNo) throws SQLException {
 		User user = null;
 		Connection con = ConnectionUtil.getConnection();
@@ -71,6 +83,11 @@ public class UserDao {
 		return user;
 	}
 	
+	/**
+	 * 신규 사용자정보를 저장한다.
+	 * @param user 사용자정보
+	 * @throws SQLException
+	 */
 	public void insertUser(User user) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(INSERT_USER_QUERY);
@@ -85,6 +102,11 @@ public class UserDao {
 		con.close();
 	}
 	
+	/**
+	 * 사용자 정보를 변경한다.
+	 * @param user 수정내용이 반영된 사용자 정보
+	 * @throws SQLException
+	 */
 	public void updateUser(User user) throws SQLException {
 		Connection con = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = con.prepareStatement(UPDATE_USER_QUERY);
@@ -100,20 +122,3 @@ public class UserDao {
 		con.close();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

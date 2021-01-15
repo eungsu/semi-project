@@ -30,7 +30,7 @@
 		      	<%
 		      		for (Category category : categories) { 
 		      	%>
-		        		<a class="dropdown-item" href="/shop-model1/product/list.jsp?catno=<%=category.getNo()%>"><%=category.getName() %></a>
+		        		<a class="dropdown-item" href="/shop-model1/book/list.jsp?catno=<%=category.getNo()%>"><%=category.getName() %></a>
 		        <%
 		      		}
 		        %>
