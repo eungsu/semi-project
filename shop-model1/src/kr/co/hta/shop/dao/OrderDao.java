@@ -204,7 +204,7 @@ public class OrderDao {
 		PreparedStatement pstmt = con.prepareStatement(GET_ORDERS_BY_USER_NO_QUERY);
 		pstmt.setInt(1, userNo);;
 		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
+		while (rs.next()) {
 			Order order = new Order();
 			order.setNo(rs.getInt("order_no"));
 			order.setUserNo(rs.getInt("user_no"));
