@@ -26,4 +26,18 @@
   + 내정보 보기
   + 포인트 변경이력 조회하기
   + 비밀번호 변경처리
-
+- 실행방법
+  + 웹 프로젝트를 생성하고 src 소스폴더와 WebContent 폴더에 소스를 복사한다.
+  + JDBC 드라이버, Commons-codec.jar 파일을 WEB-INF/lib 폴더에 추가한다.
+  + Tomcat Server에 배포하고 실행한다.
+  + 브라우져 주소창에 localhost/shop-model1/index.jsp를 입력하고 메인페이지에 접속한다.
+  
+ ## shop-model2
+ - model2방식으로 구현한 웹 애플리케이션이다.
+ - 구현내용
+   + shop-model1과 동일하다.
+ - 실행방법
+  + 웹 프로젝트를 생성하고 src 소스폴더와 WebContent 폴더에 소스를 복사한다.
+  + JDBC 드라이버, Commons-codec.jar 파일을 WEB-INF/lib 폴더에 추가한다.
+  + Tomcat Server에 배포하고 실행한다.
+  + 브라우져 주소창에 localhost/shop-model1/index.jsp를 입력하고 메인페이지에 접속한다.
