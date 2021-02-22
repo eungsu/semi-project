@@ -1,4 +1,4 @@
-# 세미프로젝트
+# 샘플 프로젝트
 - shop-model1 폴더는 모델1방식으로 구현한 Shop 웹 애플리케이션이다.
 - images 폴더는 책의 표지 이미지 파일을 포함하고 있다.
   + WebContent/resources/images 폴더에 이미지 파일을 위치시키면 된다.
